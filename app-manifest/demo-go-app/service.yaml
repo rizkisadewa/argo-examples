@@ -10,3 +10,22 @@ spec:
   - port: 8080
     protocol: TCP
     targetPort: 8080
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app-service-lb
+  namespace: dev-testing
+spec:
+  externalTrafficPolicy: Cluster
+  selector:
+    app: demo-go-app
+  ports:
+  - nodePort: 32000
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  sessionAffinity: None
+  type: LoadBalancer
