@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: go-app-argo-config
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/rizkisadewa/argo-examples.git
+    targetRevision: HEAD
+    path: app-manifest/demo-go-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev-testing
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
